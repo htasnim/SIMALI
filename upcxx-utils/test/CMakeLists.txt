@@ -1,0 +1,22 @@
+if(NOT UPCXX_FOUND)
+  find_package(UPCXX)
+endif()
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.13 AND DEFINED UPCXX_LIBRARIES)
+else()
+  find_program(UPCXX_EXEC upcxx)
+  set(CMAKE_CXX_COMPILER ${UPCXX_EXEC})
+  message(STATUS "UPCXX_UTILS is using upcxx directly as the UPCXX::upcxx library interface is not available in this low version of cmake: ${CMAKE_VERSION}")
+endif()
+
+SET(TEST_PROGS test_version test_upcxx_utils test_log test_timers test_progress_bar test_aggr_store)
+
+set(AND_THREADS)
+if (THREADS_FOUND AND NOT UPCXX_UTILS_NO_THREADS)
+  set(AND_THREADS Threads::Threads)
+endif()
+
+FOREACH(TEST ${TEST_PROGS})
+  ADD_EXECUTABLE(${TEST} ${TEST}.cpp)
+  TARGET_LINK_LIBRARIES(${TEST} UPCXX_UTILS ${AND_THREADS})
+  ADD_TEST(${TEST} upcxx-run -n 2 ${CMAKE_CURRENT_BINARY_DIR}/${TEST})
+ENDFOREACH()

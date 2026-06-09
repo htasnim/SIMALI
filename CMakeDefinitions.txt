@@ -1,0 +1,19 @@
+# use colors in the output
+add_definitions(-DCONFIG_USE_COLORS)
+
+# use the bytell hash table implementation
+add_definitions(-DUSE_BYTELL)
+
+# determined by space a virion occupies - diameter 0.1 microns, a cube is 5 microns across
+add_definitions(-DMAX_VIRIONS=125000)
+add_definitions(-DMIN_VIRIONS=1e-10)
+
+# if defined, partition into blocks. This should increase locality, but at the cost of load balance
+add_definitions(-DBLOCK_PARTITION)
+
+# the minimum number of blocks per process - too few and the load balance will be really poor
+#add_definitions(-DMIN_BLOCKS_PER_PROC=100)
+add_definitions(-DMIN_BLOCKS_PER_PROC=1)
+
+# compute average across subsambple block/square instead of just taking the first point
+add_definitions(-DAVERAGE_SUBSAMPLE)
