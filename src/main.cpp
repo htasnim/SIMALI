@@ -2,6 +2,8 @@
 //
 // Steven Hofmeyr, LBNL May 2020
 
+// SIMALI Implementation Humayra Tasnim July 2024
+
 #include <fcntl.h>
 #include <math.h>
 #include <stdarg.h>
